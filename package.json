@@ -1,0 +1,35 @@
+{
+  "name": "auth.js",
+  "version": "0.1.1",
+  "description": "A simple authentication and authorization module for building APIs when using front-end frameworks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattmcsparran/auth.js.git"
+  },
+  "keywords": [
+    "node.js",
+    "api",
+    "angular",
+    "react",
+    "vue",
+    "authentication",
+    "authorization"
+  ],
+  "author": "Matthew McSparran",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mattmcsparran/auth.js/issues"
+  },
+  "homepage": "https://github.com/mattmcsparran/auth.js#readme",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "jsonwebtoken": "^8.1.0",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.13.2",
+    "scmp": "^2.0.0"
+  }
+}
