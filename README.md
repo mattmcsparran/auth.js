@@ -1,6 +1,6 @@
+[![npm version](https://badge.fury.io/js/auth.js.svg)](https://badge.fury.io/js/auth.js)
 # auth.js
 A simple authentication and authorization module for building APIs when using front-end frameworks
-[![npm version](https://badge.fury.io/js/auth.js.svg)](https://badge.fury.io/js/auth.js)
 ## Getting Started
 
 Installing via npm:
