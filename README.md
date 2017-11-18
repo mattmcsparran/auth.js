@@ -46,11 +46,7 @@ module.exports = mongoose.model("User", UserSchema);
 ```
 
 ## Using auth.js in your routes
-<<<<<<< HEAD
 Require it in your route.
-=======
-Require it in your route. 
->>>>>>> 74f5dac0fa1ac8236914fdd0b1f7020531bd0a81
 
 Here is a example of the registration method:
 
@@ -66,11 +62,7 @@ service.register = (req, res) => {
   ```
 ## Error handling
 In the last example, you can see that auth.js handles its own errors and other messages. Messages are stored in a message object:
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> 74f5dac0fa1ac8236914fdd0b1f7020531bd0a81
   ```
 messages = {
   body: '',
@@ -79,7 +71,3 @@ messages = {
 }
 ```
 The module will use pre determined error messages and codes, and will send what type of message it is (currently: success or error) which will also allow you to utilize alerts on your front end.
-<<<<<<< HEAD
-=======
-
->>>>>>> 74f5dac0fa1ac8236914fdd0b1f7020531bd0a81
