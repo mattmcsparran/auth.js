@@ -20,16 +20,16 @@ The configuration function is as follows
 ```
 authConfig.conf(secret, saltRounds, expire);
 ```
-There only two options that have defaults are ```saltRounds``` and ```expire```, which are ```16``` and ```{ expiresIn: '4h' }``` respectively.
+There only two options that have defaults are ```saltRounds``` and ```expire```, which are ```16``` and ```{ expiresIn: '1h' }``` respectively.
 
 The recommended configuration is to use ```dotenv``` to place the JWT secret and salt rounds in the ```.env``` file as seen in the example below.
 
 ```
 authConfig.conf(process.env.SECRET_JWT, process.env.SALTROUNDS, { expiresIn: '4h' });
 ```
-Auth.js uses [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) for its tokens, so all expiration time formats for the tokens are the same.
+Auth.js uses [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) for tokens and follows auth0's formatting.
 
-## Configuring auth.js to work with mongoose
+## Configuring auth.js with mongoose
 Require it in your user schema like so:
 
 ```
