@@ -3,7 +3,12 @@ A simple authentication and authorization module for building APIs when using fr
 
 ## Getting Started
 
-Adding the module to your project
+Installing via npm:
+```
+npm i --save auth.js
+```
+
+Adding the module to your project:
 
 ```
 const auth = require('auth.js');
@@ -11,12 +16,18 @@ const authConfig = require('auth.js/lib/config');
 ```
 
 ## Configuring the variables
+The configuration function is as follows
 ```
-authConfig.jwtSecret(path_to_secret);
-authConfig.saltRounds(number_of_saltrounds); //default is 16
-authConfig.tokenExpire({ expiration time });
+authConfig.conf(secret, saltRounds, expire);
 ```
-Auth.js uses ```jsonwebtoken``` module for its tokens, so all expiration time formats for the tokens are the same.
+There only two options that have defaults are ```saltRounds``` and ```expire```, which are ```16``` and ```{ expiresIn: '4h' }``` respectively.
+
+The recommended configuration is to use ```dotenv``` to place the JWT secret and salt rounds in the ```.env``` file as seen in the example below.
+
+```
+authConfig.conf(process.env.SECRET_JWT, process.env.SALTROUNDS, { expiresIn: '4h' });
+```
+Auth.js uses [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) for its tokens, so all expiration time formats for the tokens are the same.
 
 ## Configuring auth.js to work with mongoose
 Require it in your user schema like so:
