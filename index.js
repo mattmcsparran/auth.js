@@ -82,9 +82,7 @@ schema.statics.login = function (user, password, callback) {
         foundUser.comparePassword(password, function (error, validated) {
           if (!validated) {return callback(setMessages(errors.incorrectPassword, 'error', 401)); }
           j.issueToken(foundUser, options.jwtSecret(), options.tokenExpire(), (err, token) => {
-            console.log(token);
             if (err) { callback(setMessages(errors.unknown, 'error', 400)); }
-            console.log(foundUser);
             callback(null, token);
           });
         });
@@ -105,33 +103,29 @@ schema.statics.login = function (user, password, callback) {
         return callback(setMessages(errors.userExists, 'error', 409));
       }
       user.setPassword(password, (setPasswordErr, user) => {
-        console.log('attempting to set password');
         if (setPasswordErr) { return callback(setPasswordErr); }
-        console.log(user);
         user.save((saveErr) => {
           if (saveErr) { return callback(saveErr); }
-          console.log('saving user');
           callback(null, user);
         });
       });
     });
   };
-  schema.statics.findByUsername = function(username, selectPasswordField, callback) {
+  schema.statics.findByUsername = function(username, selectPassword, callback) {
     if (typeof callback === 'undefined') {
-      callback = selectPasswordField;
-      selectPasswordField = false;
+      callback = selectPassword;
+      selectPassword = false;
     }
     if (username !== undefined) {
       username = username.toLowerCase();
     }
-    var queryOrParameters = [];
+    let queryOrParameters = [];
     for (var i = 0; i < options.usernameQueryFields.length; i++) {
       var parameter = {};
       parameter[options.usernameQueryFields[i]] = username;
       queryOrParameters.push(parameter);
     }
-    var query = options.findByUsername(this, { $or: queryOrParameters });
-
+    const query = options.findByUsername(this, { $or: queryOrParameters });
     if (callback) {
       query.exec(callback);
     } else {
