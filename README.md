@@ -55,12 +55,37 @@ Here is a example of the registration method:
 ```
 service.register = (req, res) => {
   const newUser = new User({username: req.body.username, email: req.body.email});
-  User.register(newUser, req.body.password, (err, user) => {
+  User.register(newUser, req.body.password, (err, user, msg) => {
     if (err) {
-      res.status(err.code).send(err.body)
+      console.log('error recieved: ' + err.body + ' ' + err.code);
+      res.status(409).send(err.body)
     }
-    res.status(200).json(user);
+    console.log(msg.type + ' recieved!' + ' ' + msg.body);
+    res.status(200).json({user, message: msg });
   });
+}
+  ```
+
+  And an example of the login method:
+
+  ```
+service.login = (req, res) => {
+  User.findOne({username: req.body.username}, (err, user) => {
+    if (!user) {
+      return res.sendStatus(403);
+    }
+    if (err) {
+      return res.status(err.code).send(err.body);
+    }
+    User.login(req.body.username, req.body.password, (err, token, msg) => {
+      if (err) {
+        return res.status(err.code).send(err.body);
+      }
+      console.log(msg.type + ' recieved!' + ' ' + msg.body);
+      res.status(msg.code).json({ token: token, message: msg });
+    });
+  });
+}
   ```
 ## Error handling
 In the last example, you can see that auth.js handles its own errors and other messages. Messages are stored in a message object:
