@@ -58,8 +58,7 @@ schema.methods.setPassword = function (password, callback) {
     if (err) {
     return callback(err); }
     b.salt(password, options.saltRounds(), (err, salt) => {
-      if (err) { console.log(err);
-        return callback(err); }
+      if (err) { return callback(err); }
       self.set(options.passwordField, salt);
       callback(null, self);
     });
