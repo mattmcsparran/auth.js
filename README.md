@@ -1,3 +1,4 @@
+[![npm version](https://img.shields.io/npm/v/auth.js.svg)](https://www.npmjs.com/package/auth.js)
 [![npm](https://img.shields.io/npm/dt/auth.js.svg)](https://www.npmjs.com/package/auth.js)
 
 # auth.js
