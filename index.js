@@ -83,7 +83,7 @@ schema.statics.login = function (user, password, callback) {
           if (!validated) {return callback(setMessages(errors.incorrectPassword, 'error', 401)); }
           j.issueToken(foundUser, options.jwtSecret(), options.tokenExpire(), (err, token) => {
             if (err) { callback(setMessages(errors.unknown, 'error', 400)); }
-            callback(null, token);
+            callback(null, token, setMessages(success.loggedIn, 'success', 200));
           });
         });
       }
@@ -106,7 +106,7 @@ schema.statics.login = function (user, password, callback) {
         if (setPasswordErr) { return callback(setPasswordErr); }
         user.save((saveErr) => {
           if (saveErr) { return callback(saveErr); }
-          callback(null, user);
+          callback(null, user, setMessages(success.createdAccount, 'success', 200));
         });
       });
     });

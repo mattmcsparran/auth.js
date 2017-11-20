@@ -1,4 +1,5 @@
-[![npm version](https://badge.fury.io/js/auth.js.svg)](https://badge.fury.io/js/auth.js)
+[![npm](https://img.shields.io/npm/dt/auth.js.svg)](https://www.npmjs.com/package/auth.js)
+
 # auth.js
 A simple authentication and authorization module for building APIs when using front-end frameworks
 ## Getting Started

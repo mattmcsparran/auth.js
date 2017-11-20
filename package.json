@@ -1,6 +1,6 @@
 {
   "name": "auth.js",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A simple authentication and authorization module for building APIs when using front-end frameworks",
   "main": "index.js",
   "scripts": {
