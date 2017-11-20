@@ -58,10 +58,10 @@ service.register = (req, res) => {
   User.register(newUser, req.body.password, (err, user, msg) => {
     if (err) {
       console.log('error recieved: ' + err.body + ' ' + err.code);
-      res.status(409).send(err.body)
+      res.status(err.code).send(err.body)
     }
     console.log(msg.type + ' recieved!' + ' ' + msg.body);
-    res.status(200).json({user, message: msg });
+    res.status(msg.code).json({user, message: msg });
   });
 }
   ```
@@ -87,8 +87,10 @@ service.login = (req, res) => {
   });
 }
   ```
+Note: console.log()'s are being used for tracking purposes until a better logging system is implemented.
+
 ## Error handling
-In the last example, you can see that auth.js handles its own errors and other messages. Messages are stored in a message object:
+In the example above, you can see that auth.js handles its own errors and other messages. Messages are stored in a message object:
 
   ```
 messages = {
@@ -97,4 +99,4 @@ messages = {
   code: ''
 }
 ```
-The module will use pre determined error messages and codes, and will send what type of message it is (currently: success or error) which will also allow you to utilize alerts on your front end.
+The module will use pre determined error messages and HTTP codes. It will also send what type of message it is (currently: success or error) which will also allow you to utilize alerts on your front end.
