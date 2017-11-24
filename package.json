@@ -1,6 +1,6 @@
 {
   "name": "auth.js",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "description": "A simple authentication and authorization module for building APIs when using front-end frameworks",
   "main": "index.js",
   "scripts": {
@@ -33,6 +33,7 @@
     "lodash": "^4.17.4",
     "mocha": "^4.0.1",
     "mongoose": "^4.13.2",
+    "nodemailer": "^4.4.0",
     "nyc": "^11.3.0",
     "scmp": "^2.0.0"
   }

@@ -13,7 +13,7 @@ const b = require('./lib/bcrypt');
 const j = require('./lib/jwt');
 const messages = require('./lib/messages');
 const errors = require('./lib/errors');
-const success = require('./lib/success')
+const success = require('./lib/success');
 // Configuration
 setMessages = (body, type, code) => {
   messages.body = body;
@@ -55,12 +55,11 @@ schema.methods.setPassword = function (password, callback) {
   }
   let self = this;
   options.passwordValidator(password, (err) => {
-    if (err) {
-    return callback(err); }
+    if (err) { return callback(err); }
     b.salt(password, options.saltRounds(), (err, salt) => {
       if (err) { return callback(err); }
       self.set(options.passwordField, salt);
-      callback(null, self);
+      return callback(null, self);
     });
   });
 };
@@ -81,8 +80,8 @@ schema.statics.login = function (user, password, callback) {
         foundUser.comparePassword(password, function (error, validated) {
           if (!validated) {return callback(setMessages(errors.incorrectPassword, 'error', 401)); }
           j.issueToken(foundUser, options.jwtSecret(), options.tokenExpire(), (err, token) => {
-            if (err) { callback(setMessages(errors.unknown, 'error', 400)); }
-            callback(null, token, setMessages(success.loggedIn, 'success', 200));
+            if (err) { return callback(setMessages(errors.unknown, 'error', 400)); }
+            return callback(null, token, setMessages(success.loggedIn, 'success', 200));
           });
         });
       }
@@ -105,7 +104,7 @@ schema.statics.login = function (user, password, callback) {
         if (setPasswordErr) { return callback(setPasswordErr); }
         user.save((saveErr) => {
           if (saveErr) { return callback(saveErr); }
-          callback(null, user, setMessages(success.createdAccount, 'success', 200));
+          return callback(null, user, setMessages(success.createdAccount, 'success', 200));
         });
       });
     });
