@@ -128,7 +128,7 @@ const authMiddleware = require('auth.js/middleware');
 After requiring it, place it in the routes as you would do for any other middleware.
 
 ```
-router.post('/', authMiddleware.verify, authMiddleware.isAdmin, userService.insert);
+router.post('/', [authMiddleware.verify, authMiddleware.isAdmin], userService.insert);
 ```
 
 In the above example, the middleware is being used in a route that inserts users into a database. This is different from the typical registering users route.

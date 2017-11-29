@@ -27,11 +27,11 @@ module.exports = function(schema, options) {
   options.usernameLowerCase = options.usernameLowerCase || false;
   options.findByUsername = options.findByUsername || function(model, queryParameters) { return model.findOne(queryParameters); }
   options.passwordField = options.passwordField || 'password';
-  options.errorMessages = options.errorMessages || {};
   options.saltRounds = function() { return config.saltRounds || 16 } ;
   options.tokenExpire = function() { return config.tokenExpire || { expiresIn: '1h' } };
-  options.jwtSecret = function() { return config.jwtSecret };
+  options.jwtSecret = function() { return config.jwtSecret || 'You should not be using this for your secret. it is really dumb. Please use a different secret' };
   options.passwordValidator = options.passwordValidator || function(password, callback) { callback(null); };
+  options.lastLoginField = options.lastLoginField || 'lastLogin';
   if (options.usernameQueryFields) {
     options.usernameQueryFields.push(options.usernameField);
   } else {
@@ -72,6 +72,15 @@ schema.methods.comparePassword = function (password, callback) {
       return callback(null, validated);
   });
 };
+schema.methods.setLastLogin = function () {
+  let self = this;
+  self.set(options.lastLoginField, Date.now());
+  self.save((err) => {
+    if (err) {
+      return err;
+    }
+  });
+}
 schema.statics.login = function (user, password, callback) {
   let self = this;
     self.findByUsername(user, function (err, foundUser) {
@@ -81,14 +90,15 @@ schema.statics.login = function (user, password, callback) {
           if (!validated) {return callback(setMessages(errors.incorrectPassword, 'error', 401)); }
           j.issueToken(foundUser, options.jwtSecret(), options.tokenExpire(), (err, token) => {
             if (err) { return callback(setMessages(errors.unknown, 'error', 400)); }
+            foundUser.setLastLogin();
             return callback(null, token, setMessages(success.loggedIn, 'success', 200));
           });
         });
       }
     });
   };
-  schema.statics.register = function (user, password, callback) {
-    if (!(user instanceof this)) {
+schema.statics.register = function (user, password, callback) {
+  if (!(user instanceof this)) {
         user = new this(user);
       }
       if (!user.get(options.usernameField)) {
@@ -109,7 +119,7 @@ schema.statics.login = function (user, password, callback) {
       });
     });
   };
-  schema.statics.findByUsername = function(username, selectPassword, callback) {
+schema.statics.findByUsername = function(username, selectPassword, callback) {
     if (typeof callback === 'undefined') {
       callback = selectPassword;
       selectPassword = false;
