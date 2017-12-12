@@ -1,5 +1,5 @@
 /*
- * easy-api-auth
+ * auth.js
  * Copyright(c) 2017 Matthew McSparran
  * MIT Licensed
  */
