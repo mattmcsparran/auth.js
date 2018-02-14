@@ -20,9 +20,15 @@ const authConfig = require('auth.js/lib/config');
 ## Configuring the variables
 The configuration function is as follows
 ```
-dotenv.load({ path: '.env' });
+const dotenv = require('dotenv').config({path: '.env'});
+```
+for the `dotenv` config
+
+```
 authConfig.conf(secret, saltRounds, expire);
 ```
+to configure the module for use with the environment variables.
+
 There only two options that have defaults are ```saltRounds``` and ```expire```, which are ```16``` and ```{ expiresIn: '1h' }``` respectively.
 
 The recommended configuration is to use ```dotenv``` to place the JWT secret and salt rounds in the ```.env``` file as seen in the example below.
